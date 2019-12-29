@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AngularJS</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <head>
+<body ng-app="EmployeeManagement" ng-controller="EmployeeController">
+<h3>
+    CRUD: Spring Boot + Rest + AngularJS
+</h3>
+<form ng-submit="submitEmployee()">
+    <table border="0">
+        <tr>
+            <td>ID</td>
+            <td>{{employeeForm.empId}}</td>
+        </tr>
+        <tr>
+            <td>Имя</td>
+            <td><input type="text" ng-model="employeeForm.empName" /></td>
+        </tr>
+        <tr>
+            <td>Организация</td>
+            <td><input type="text" ng-model="employeeForm.empOrg"  /></td>
+        </tr>
+        <tr>
+            <td>Руководитель</td>
+            <td><input type="text" ng-model="employeeForm.empSV"  /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Submit" class="blue-button" />
+            </td>
+        </tr>
+    </table>
+</form>
+<br/>
+<a class="create-button" ng-click="createEmployee()">Create Employee</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Имя сотрудника</th>
+        <th>Организация</th>
+        <th>Руководитель</th>
+        <th>Редактировать</th>
+        <th>Удалить</th>
+    </tr>
+    <!-- $scope.employees -->
+
+    <tr ng-repeat="employee in employees">
+        <td> {{ employee.id }}</td>
+        <td> {{ employee.name }}</td>
+        <td >{{ employee.org_name }}</td>
+        <td >{{ employee.s_name }}</td>
+        <td>
+            <a ng-click="editEmployee(employee)" class="edit-button">Редактировать</a>
+        </td>
+        <td>
+            <a ng-click="deleteEmployee(employee)" class="delete-button">Удалить</a>
+        </td>
+    </tr>
+</table>
+<script th:src="@{/js/angular.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
