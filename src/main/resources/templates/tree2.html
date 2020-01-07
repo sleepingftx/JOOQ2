@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AngularJS</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+ </head>
+
+<body ng-app="Tree2">
+<div class="container">
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Список сотрудников</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="orgss">Список организаций</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="tree1">Дерево сотрудников</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="tree2">Дерево организаций</a>
+        </li>
+    </ul>
+
+    <br>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <ul  ng-controller="Tree2Controller">
+                <li  ng-repeat="data in tree" ng-include="'item1'" class="node"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!--<script th:src="@{/js/angular.min.js}"></script>-->
+    <!--<script th:src="@{/js/main.js}"></script>-->
+    <script th:src="@{/js/bundle.js}"></script>
+    <!--<script th:src="@{/js/main.js}"></script>-->
+</body>
+</html>

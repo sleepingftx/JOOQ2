@@ -1,12 +1,12 @@
 DROP TABLE IF EXISTS organizations, employees,employees_organizations,employees_employees,organizations_organizations;
 
 CREATE TABLE employees (
-id             INT          NOT NULL PRIMARY KEY,
+id             serial PRIMARY KEY,
 name     VARCHAR(50)
 );
 
 CREATE TABLE organizations (
-id             INT          NOT NULL PRIMARY KEY,
+id             serial PRIMARY KEY,
 name          VARCHAR(100) NOT NULL
 );
 

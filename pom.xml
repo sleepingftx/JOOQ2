@@ -9,6 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
     </properties>
+
+
     <parent>
         <artifactId>spring-boot-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
@@ -115,14 +117,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>6</source>
-                    <target>6</target>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>1.8.0</version>
 
                         <executions>
                             <execution>
@@ -135,22 +137,20 @@
                                 <id>npm-install</id>
                                 <goals><goal>npm</goal></goals>
                                 <configuration>
-                                    <arguments>-prefix Vue-app/ install</arguments>
+                                    <arguments>install</arguments>
                                 </configuration>
                             </execution>
 
                             <execution>
                                 <id>webpack-build</id>
-                                <goals><goal>npm</goal></goals>
-                                <configuration>
-                                    <arguments>-prefix Vue-app/ run build-prod</arguments>
-                                </configuration>
+                                <goals><goal>webpack</goal></goals>
                             </execution>
                         </executions>
 
                         <configuration>
-                            <nodeVersion>v8.11.1</nodeVersion>
-                            <npmVersion>5.6.0</npmVersion>
+                            <nodeVersion>v12.14.0</nodeVersion>
+                            <npmVersion>6.13.4</npmVersion>
+                          <installDirectory>target</installDirectory>
                         </configuration>
                     </plugin>
 

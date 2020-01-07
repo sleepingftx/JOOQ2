@@ -2,66 +2,95 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>AngularJS</title>
-    <link th:href="@{/css/main.css}" rel="stylesheet" />
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
 
-    <head>
 <body ng-app="EmployeeManagement" ng-controller="EmployeeController">
-<h3>
-    CRUD: Spring Boot + Rest + AngularJS
-</h3>
-<form ng-submit="submitEmployee()">
-    <table border="0">
-        <tr>
-            <td>ID</td>
-            <td>{{employeeForm.empId}}</td>
-        </tr>
-        <tr>
-            <td>Имя</td>
-            <td><input type="text" ng-model="employeeForm.empName" /></td>
-        </tr>
-        <tr>
-            <td>Организация</td>
-            <td><input type="text" ng-model="employeeForm.empOrg"  /></td>
-        </tr>
-        <tr>
-            <td>Руководитель</td>
-            <td><input type="text" ng-model="employeeForm.empSV"  /></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Submit" class="blue-button" />
-            </td>
-        </tr>
-    </table>
-</form>
-<br/>
-<a class="create-button" ng-click="createEmployee()">Create Employee</a>
-<table border="1">
+<div class="container">
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link active" href="/">Список сотрудников</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="orgss">Список организаций</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="tree1">Дерево сотрудников</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="tree2">Дерево организаций</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn-success" href="#" ng-click="createEmployee()">Создать</a>
+        </li>
+    </ul>
+
+<br>
+
+    <form ng-show="employeeForm.formVis" class="input-group mb-3" ng-submit="submitEmployee()">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Имя</span>
+        </div>
+        <input type="text" aria-label="Имя" class="form-control" ng-model="employeeForm.formName">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="edit_org">Организация</label>
+        </div>
+        <select class="custom-select" ng-model="employeeForm.formOrg"  ng-change="org_change()" id="edit_org">
+            <option value="option-0">Нет</option>
+            <option   ng-repeat="org in orgs"  value="option-{{org.id}}">{{org.name}}</option>
+        </select>
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="edit_s_u">Руководитель</label>
+        </div>
+        <select class="custom-select" ng-model="employeeForm.formSV" id="edit_s_u">
+            <option value="option-0">Нет</option>
+            <option  ng-hide="employeeForm.formOrg != 'option-{{employee.org_id}}' || employeeForm.formId == '{{employee.id}}' || employeeForm.formId=='{{employee.s_id}}'"  ng-repeat="employee in employees"  value="option-{{employee.id}}">{{ employee.name }}</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" ng-disabled="employeeForm.formOrg == 'option-0'">Отправить</button>
+        </div>
+    </form>
+<!--    <input type="text" class="form-control" placeholder="Filter..." ng-model="q">-->
+    <input type="text" ng-model="filterText" class="form-control search-icon float-right" placeholder="Фильтр...">
+<table class="table table-hover table-bordered" border="1">
+    <thead>
     <tr>
         <th>ID</th>
         <th>Имя сотрудника</th>
         <th>Организация</th>
         <th>Руководитель</th>
-        <th>Редактировать</th>
-        <th>Удалить</th>
+        <th>Редактировать/Удалить</th>
     </tr>
-    <!-- $scope.employees -->
-
-    <tr ng-repeat="employee in employees">
+    </thead>
+    <tbody>
+    <tr ng-repeat="employee in filterData = (employees | filter:{name:filterText}) | limitTo:5:5*(page-1)">
         <td> {{ employee.id }}</td>
         <td> {{ employee.name }}</td>
         <td >{{ employee.org_name }}</td>
         <td >{{ employee.s_name }}</td>
         <td>
-            <a ng-click="editEmployee(employee)" class="edit-button">Редактировать</a>
-        </td>
-        <td>
-            <a ng-click="deleteEmployee(employee)" class="delete-button">Удалить</a>
+            <a ng-click="editEmployee(employee)" href="#" class="badge badge-info">Редактировать</a><br>
+            <a ng-hide="isDel({{employee.id}})" ng-click="deleteEmployee(employee)" href="#" class="badge badge-danger">Удалить</a>
         </td>
     </tr>
+    </tbody>
 </table>
-<script th:src="@{/js/angular.min.js}"></script>
-<script th:src="@{/js/main.js}"></script>
+   <center>
+       <uib-pagination class="pagination-sm pagination justify-content-center" total-items="filterData.length" ng-model="page"
+                    ng-change="pageChanged()" previous-text="&lsaquo; Назад" next-text="Вперед &rsaquo;" items-per-page=5></uib-pagination>
+   </center>
+
+
+</div>
+
+
+
+
+    </div>
+<!--<script th:src="@{/js/angular.min.js}"></script>-->
+<!--<script th:src="@{/js/main.js}"></script>-->
+<script th:src="@{/js/bundle.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 </body>
 </html>

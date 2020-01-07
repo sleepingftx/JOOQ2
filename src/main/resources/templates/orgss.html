@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AngularJS</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+
+<body ng-app="OrgsManagement" ng-controller="OrgsController">
+<div class="container">
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="/">Список сотрудников</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="orgss">Список организаций</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="tree1">Дерево сотрудников</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="tree2">Дерево организаций</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn-success" href="#" ng-click="createOrg()">Создать</a>
+        </li>
+    </ul>
+
+    <br>
+
+    <form ng-show="orgForm.formVis" class="input-group mb-3" ng-submit="submitOrg()">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Имя</span>
+        </div>
+        <input type="text" aria-label="Имя" class="form-control" ng-model="orgForm.formName">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="edit_p_o">Головная организация</label>
+        </div>
+        <select class="custom-select" ng-model="orgForm.formParent" id="edit_p_o">
+            <option value="option-0">Нет</option>
+            <option  ng-hide="orgForm.formId == '{{org.id}}' || orgForm.formId=='{{org.p_id}}'"  ng-repeat="org in orgs"  value="option-{{org.id}}">{{ org.name }}</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Отправить</button>
+        </div>
+    </form>
+    <!--    <input type="text" class="form-control" placeholder="Filter..." ng-model="q">-->
+    <input type="text" ng-model="filterText" class="form-control search-icon float-right" placeholder="Фильтр...">
+    <table class="table table-hover table-bordered" border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя организации</th>
+            <th>Головная организация</th>
+            <th>Кол-во сотрудников</th>
+            <th>Редактировать/Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="org in filterData = (orgs | filter:{name:filterText}) | limitTo:5:5*(page-1)">
+            <td> {{ org.id }}</td>
+            <td> {{ org.name }}</td>
+            <td >{{ org.p_name }}</td>
+            <td >{{ org.empls }}</td>
+            <td>
+                <a ng-click="editOrg(org)" href="#" class="badge badge-info">Редактировать</a><br>
+                <a ng-hide="isDel({{org.id}}) || org.empls >0" ng-click="deleteOrg(org)" href="#" class="badge badge-danger">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <center>
+        <uib-pagination class="pagination-sm pagination justify-content-center" total-items="filterData.length" ng-model="page"
+                        ng-change="pageChanged()" previous-text="&lsaquo; Назад" next-text="Вперед &rsaquo;" items-per-page=5></uib-pagination>
+    </center>
+
+
+</div>
+
+
+
+
+</div>
+<!--<script th:src="@{/js/angular.min.js}"></script>-->
+<!--<script th:src="@{/js/main.js}"></script>-->
+<script th:src="@{/js/bundle.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
+</body>
+</html>

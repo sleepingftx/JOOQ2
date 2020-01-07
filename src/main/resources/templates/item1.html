@@ -1,0 +1,10 @@
+<span class="o_row" ng-hide="data.child"></span>
+<span class="o_row" ng-click="add(data)"        ng-show="data.child && data.nodes.length == 0"  >+</span>
+<span class="o_row" ng-click="delete(data)"     ng-show="data.child && data.nodes.length > 0">-</span>
+
+{{data.name}}
+<!--<button class="add" ng-click="add(data)">Добавить узел</button>-->
+<!--<button class="delete" ng-click="delete(data)" ng-show="data.nodes.length > 0">Удалить узел</button>-->
+<ul>
+    <li ng-repeat="data in data.nodes" ng-include="'item1'" class="node"></li>
+</ul>
