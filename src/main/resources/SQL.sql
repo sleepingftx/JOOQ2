@@ -49,21 +49,3 @@ PRIMARY KEY (parent_id, organization_id),
 CONSTRAINT fk_ee_e      FOREIGN KEY (organization_id)    REFERENCES organizations   (id)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-INSERT INTO employees VALUES
-(1, 'Ilnur'),
-(2, 'Boris'),
-(3, 'Pavel'),
-(4, 'Irina');
-
-INSERT INTO organizations VALUES
-(1, 'Central bank'),
-(2, 'Alfa'),
-(3, 'Sberbank'),
-(4, 'VTB');
-
-INSERT INTO employees_organizations VALUES (1, 2),(2, 3),(1,4),(1,1);
-
-INSERT INTO employees_employees VALUES  (1, 2), (2, 3),(2,4),(0,1);
-
-INSERT INTO organizations_organizations VALUES (1, 2), (1, 3),(0,1),(0,4);
